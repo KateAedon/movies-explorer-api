@@ -1,0 +1,22 @@
+{
+  "name": "study_project_movies-explorer_api",
+  "version": "1.0.0",
+  "description": "Final study project at YandexPraktikum",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path .eslintrc . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KateAedon/movies-explorer-api.git"
+  },
+  "author": "Kate Aedon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KateAedon/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/KateAedon/movies-explorer-api#readme"
+}
