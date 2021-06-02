@@ -23,10 +23,23 @@ module.exports.addMovie = (req, res, next) => {
     nameRU,
     nameEN,
     thumbnail,
-    movieId = req.params._id,
+    movieId,
   } = req.body;
 
-  Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, owner, movieId })
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    owner,
+    movieId,
+  })
     .then((movie) => {
       res.status(200).send(movie);
     })
@@ -34,8 +47,8 @@ module.exports.addMovie = (req, res, next) => {
       if (error.name === 'ValidationError') {
         throw new BadRequestError('Неверно введены данные');
       }
-      next(error);
-    });
+    })
+    .catch((err) => next(err));
 };
 
 module.exports.deleteMovie = (req, res, next) => {

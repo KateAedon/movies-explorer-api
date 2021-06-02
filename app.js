@@ -3,12 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const authRouter = require('./routes/auth');
+const NotFoundError = require('./errors/NotFoundError');
 const auth = require('./middlewares/auth');
-const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const helmet = require('helmet');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -25,7 +27,7 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 app.use(requestLogger); // подключаем логгер запросов
-
+app.use(helmet());
 app.use(cors());
 
 app.use('/', authRouter);
@@ -40,7 +42,6 @@ app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
-// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
   return res.status(statusCode).send({

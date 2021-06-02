@@ -8,7 +8,7 @@ const {
 } = require('../controllers/movies');
 
 moviesRouter.get('/', getMovies);
-moviesRouter.post('/', validateMovie, addMovie);
+moviesRouter.post('/', addMovie);
 moviesRouter.delete('/movieId', validateMovieId, deleteMovie);
 
 module.exports = moviesRouter;
