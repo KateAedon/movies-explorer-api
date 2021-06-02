@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
 const authRouter = require('./routes/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const helmet = require('helmet');
 
 const { PORT = 3000 } = process.env;
 const app = express();
