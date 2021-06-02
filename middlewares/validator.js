@@ -33,22 +33,23 @@ const validateLogin = celebrate({
 
 const validateMovie = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2),
-    director: Joi.string().required().min(2),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.string().required().min(4),
-    description: Joi.string().required().min(2),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
     image: Joi.string().required().custom(validateUrl),
     trailer: Joi.string().required().custom(validateUrl),
-    thumbnail: Joi.string().required().custom(validateUrl),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
+    thumbnail: Joi.string().required().custom(validateUrl),
+    movieId: Joi.number().required(),
   }),
 });
 
 const validateMovieId = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().alphanum().length(24).hex(),
+    movieId: Joi.string().alphanum().length(24).hex(),
   }),
 });
 
@@ -58,5 +59,5 @@ module.exports = {
   validateLogin,
   validateMovie,
   validateUserUpdate,
-  validateMovieId
+  validateMovieId,
 };
