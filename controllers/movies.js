@@ -41,7 +41,7 @@ module.exports.addMovie = (req, res, next) => {
     movieId,
   })
     .then((movie) => {
-      res.status(200).send(movie);
+      res.send(movie);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
