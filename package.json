@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/KateAedon/movies-explorer-api#readme",
   "devDependencies": {
-    "eslint": "^7.27.0"
+    "eslint": "^7.28.0"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

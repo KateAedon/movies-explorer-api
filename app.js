@@ -34,6 +34,4 @@ app.use(errors()); // обработчик ошибок celebrate
 
 app.use(errorsHandler);
 
-app.listen(PORT, () => {
-  console.log(`listening to PORT ${PORT}`);
-});
+app.listen(PORT);
