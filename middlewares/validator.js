@@ -1,12 +1,12 @@
 const { celebrate, Joi, CelebrateError } = require('celebrate');
-const validator = require('validator');
+// const validator = require('validator');
 
-const validateUrl = (url) => {
-  if (!validator.isURL(url, { require_protocol: true })) {
-    throw new CelebrateError('Некорректный URL');
-  }
-  return url;
-};
+// const validateUrl = (url) => {
+//   if (!validator.isURL(url, { require_protocol: true })) {
+//     throw new CelebrateError('Некорректный URL');
+//   }
+//   return url;
+// };
 
 const validateUser = celebrate({
   body: Joi.object().keys({
@@ -35,13 +35,13 @@ const validateMovie = celebrate({
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.string().required(),
+    year: Joi.string().required().min(2).max(4),
     description: Joi.string().required(),
-    image: Joi.string().required().custom(validateUrl),
-    trailer: Joi.string().required().custom(validateUrl),
+    image: Joi.string().required().uri(),
+    trailer: Joi.string().required().uri(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().custom(validateUrl),
+    thumbnail: Joi.string().required().uri(),
     movieId: Joi.number().required(),
   }),
 });
@@ -53,7 +53,7 @@ const validateMovieId = celebrate({
 });
 
 module.exports = {
-  validateUrl,
+ //  validateUrl,
   validateUser,
   validateLogin,
   validateMovie,

@@ -26,6 +26,20 @@ module.exports.addMovie = (req, res, next) => {
     movieId,
   } = req.body;
 
+  if (!country
+    || !director
+    || !duration
+    || !year
+    || !description
+    || !image
+    || !trailer
+    || !nameRU
+    || !nameEN
+    || !thumbnail
+    || !movieId) {
+    throw new BadRequestError('Введены некоррекные данные');
+  }
+
   Movie.create({
     country,
     director,

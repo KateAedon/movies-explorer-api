@@ -28,7 +28,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return validator.isUrl(v);
+        return validator.isURL(v);
       },
     },
   },
@@ -37,7 +37,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return validator.isUrl(v);
+        return validator.isURL(v);
       },
     },
   },
@@ -46,7 +46,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return validator.isUrl(v);
+        return validator.isURL(v);
       },
     },
   },

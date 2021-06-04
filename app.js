@@ -34,7 +34,7 @@ app.use(cors());
 app.use('/', authRouter);
 app.use(auth);
 app.use('/users', auth, usersRouter);
-app.use('/movies', auth, moviesRouter);
+app.use('/', auth, moviesRouter);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
