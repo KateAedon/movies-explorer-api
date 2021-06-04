@@ -1,12 +1,4 @@
-const { celebrate, Joi, CelebrateError } = require('celebrate');
-// const validator = require('validator');
-
-// const validateUrl = (url) => {
-//   if (!validator.isURL(url, { require_protocol: true })) {
-//     throw new CelebrateError('Некорректный URL');
-//   }
-//   return url;
-// };
+const { celebrate, Joi } = require('celebrate');
 
 const validateUser = celebrate({
   body: Joi.object().keys({
@@ -53,7 +45,6 @@ const validateMovieId = celebrate({
 });
 
 module.exports = {
- //  validateUrl,
   validateUser,
   validateLogin,
   validateMovie,
