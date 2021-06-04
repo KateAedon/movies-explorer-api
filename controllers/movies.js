@@ -75,15 +75,7 @@ module.exports.deleteMovie = (req, res, next) => {
       if (String(movie.owner) !== req.user._id) {
         throw new ForbiddenError('недостаточно прав для выполнения операции');
       }
-      Movie.findByIdAndDelete(req.params.movieId)
-        .then(() => res.status(200).send({ message: 'фильм удален из сохраненных' }))
-        .catch((err) => {
-          if (err.name === 'CastError') {
-            next(new BadRequestError('Переданы неверные данные'));
-          } else {
-            next(err);
-          }
-        });
+      movie.remove().then(() => res.send({ message: 'фильм удален из сохраненных' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
