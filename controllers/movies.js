@@ -66,14 +66,15 @@ module.exports.addMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  const owner = req.user._id;
-
   Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Нет фильма с таким id');
       }
 
+      if (String(movie.owner) !== req.user._id) {
+        throw new ForbiddenError('недостаточно прав для выполнения операции');
+      }
       Movie.findByIdAndDelete(req.params.movieId)
         .then(() => res.status(200).send({ message: 'фильм удален из сохраненных' }))
         .catch((err) => {
