@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const errorsHandler = require('./middlewares/errorsHandler');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -42,14 +43,8 @@ app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  return res.status(statusCode).send({
-    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
-  });
-});
+app.use(errorsHandler);
 
 app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
   console.log(`listening to PORT ${PORT}`);
 });

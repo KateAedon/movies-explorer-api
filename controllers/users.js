@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const BadRequestError = require('../errors/BadRequestError');
 
 const SALT_ROUNDS = 10;
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -15,6 +16,10 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 module.exports.updateUserData = (req, res, next) => {
   const { email, name } = req.body;
+
+  if (!email || !name) {
+    throw new BadRequestError('Введены некорректные данные');
+  }
 
   User.findByIdAndUpdate(
     req.user._id,
@@ -32,7 +37,7 @@ module.exports.updateUserData = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const {
-    email, password, name
+    email, password, name,
   } = req.body;
 
   User.findOne({ email })
@@ -43,7 +48,7 @@ module.exports.createUser = (req, res, next) => {
       return bcrypt.hash(password, SALT_ROUNDS);
     })
     .then((hash) => User.create({
-      email, password: hash, name
+      email, password: hash, name,
     }))
     .then((user) => res.status(200).send({
       email: user.email,
