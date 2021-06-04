@@ -68,16 +68,14 @@ module.exports.addMovie = (req, res, next) => {
 module.exports.deleteMovie = (req, res, next) => {
   const owner = req.user._id;
 
-  Movie.findById(req.params._id)
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Нет карточки с таким id');
+        throw new NotFoundError('Нет фильма с таким id');
       }
-      if (movie.owner.toString() !== owner) {
-        throw new ForbiddenError('недостаточно прав для выполнения операции');
-      }
-      Movie.findByIdAndDelete(req.params._id)
-        .then(() => res.status(200).send({ message: 'карточка успешно удалена' }))
+
+      Movie.findByIdAndDelete(req.params.movieId)
+        .then(() => res.status(200).send({ message: 'фильм удален из сохраненных' }))
         .catch((err) => {
           if (err.name === 'CastError') {
             next(new BadRequestError('Переданы неверные данные'));
