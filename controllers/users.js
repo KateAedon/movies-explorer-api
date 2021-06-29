@@ -15,7 +15,7 @@ module.exports.getCurrentUser = (req, res, next) => {
 };
 
 module.exports.updateUserData = (req, res, next) => {
-  const { email, name } = req.body;
+  const { name, email } = req.body;
 
   if (!email || !name) {
     throw new BadRequestError('Введены некорректные данные');
@@ -23,7 +23,7 @@ module.exports.updateUserData = (req, res, next) => {
 
   User.findByIdAndUpdate(
     req.user._id,
-    { email, name },
+    { name, email },
     { new: true, runValidators: true },
   )
     .then((user) => {
@@ -37,7 +37,7 @@ module.exports.updateUserData = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const {
-    email, password, name,
+    name, email, password,
   } = req.body;
 
   User.findOne({ email })
@@ -48,7 +48,7 @@ module.exports.createUser = (req, res, next) => {
       return bcrypt.hash(password, SALT_ROUNDS);
     })
     .then((hash) => User.create({
-      email, password: hash, name,
+      name, email, password: hash,
     }))
     .then((user) => res.status(200).send({
       email: user.email,
