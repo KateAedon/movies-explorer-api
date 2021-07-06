@@ -34,22 +34,13 @@ const validateMovie = celebrate({
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().required().uri(),
-<<<<<<< HEAD
     movieId: Joi.number().integer(),
-=======
-    movieId: Joi.number().required(),
->>>>>>> 15adb2983fa2395805194a4b5e664c5f1f1c536c
   }),
 });
 
 const validateMovieId = celebrate({
-<<<<<<< HEAD
   params: Joi.object().keys({
     movieId: Joi.string().hex().length(24),
-=======
-  body: Joi.object().keys({
-    movieId: Joi.string().alphanum().length(24).hex(),
->>>>>>> 15adb2983fa2395805194a4b5e664c5f1f1c536c
   }),
 });
 
