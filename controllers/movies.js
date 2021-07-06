@@ -26,20 +26,6 @@ module.exports.addMovie = (req, res, next) => {
     movieId,
   } = req.body;
 
-  if (!country
-    || !director
-    || !duration
-    || !year
-    || !description
-    || !image
-    || !trailer
-    || !nameRU
-    || !nameEN
-    || !thumbnail
-    || !movieId) {
-    throw new BadRequestError('Введены некоррекные данные');
-  }
-
   Movie.create({
     country,
     director,
@@ -66,7 +52,8 @@ module.exports.addMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  const { movieId } = req.params;
+  Movie.findById(movieId).select('+owner')
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Нет фильма с таким id');
@@ -75,7 +62,8 @@ module.exports.deleteMovie = (req, res, next) => {
       if (String(movie.owner) !== req.user._id) {
         throw new ForbiddenError('недостаточно прав для выполнения операции');
       }
-      movie.remove().then(() => res.send({ message: 'фильм удален из сохраненных' }));
+      return Movie.findByIdAndRemove(movieId).select('-owner')
+        .then(() => res.send({ message: 'фильм удален из сохраненных' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
