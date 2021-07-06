@@ -14,11 +14,7 @@ const { PORT = 3001 } = process.env;
 const app = express();
 
 app.use(helmet());
-app.use(cors({
-  origin: 'https://kateaedon.movie.nomoredomains.icu',
-  //'http://localhost:3001',
-  credentials: true,
-}));
+app.use(cors());
 
 =======
 const allowedCors = [
