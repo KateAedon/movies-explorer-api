@@ -15,14 +15,6 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 
-=======
-const allowedCors = [
-  'https://kateaedon.movie.nomoredomains.icu',
-];
-
-const { PORT = 3001 } = process.env;
-const app = express();
-
 app
   .use(cookieParser())
   .use(bodyParser.json())
