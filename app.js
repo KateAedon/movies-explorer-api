@@ -9,6 +9,7 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorsHandler = require('./middlewares/errorsHandler');
 
+<<<<<<< HEAD
 const { PORT = 3001 } = process.env;
 const app = express();
 
@@ -19,6 +20,17 @@ app.use(cors({
   credentials: true,
 }));
 
+=======
+const allowedCors = [
+  'https://kateaedon.movie.nomoredomains.icu',
+  'https://api.kateaedon.movie.nomoredomains.icu',
+  'http://localhost:3001',
+];
+
+const { PORT = 3001 } = process.env;
+const app = express();
+
+>>>>>>> 15adb2983fa2395805194a4b5e664c5f1f1c536c
 app
   .use(cookieParser())
   .use(bodyParser.json())
@@ -31,6 +43,13 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 app.use(requestLogger); // подключаем логгер запросов
+<<<<<<< HEAD
+=======
+app.use(helmet());
+app.use(cors({
+  origin: allowedCors,
+}));
+>>>>>>> 15adb2983fa2395805194a4b5e664c5f1f1c536c
 
 app.use(router);
 
