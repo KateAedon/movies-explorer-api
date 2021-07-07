@@ -9,13 +9,6 @@ const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorsHandler = require('./middlewares/errorsHandler');
 
-const allowedCors = [
-  'https://kateaedon.movie.nomoredomains.icu',
-  'https://api.kateaedon.movie.nomoredomains.icu',
-  'http://localhost:3001',
-  'http://localhost:3000',
-];
-
 const { PORT = 3001 } = process.env;
 const app = express();
 
@@ -33,13 +26,9 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
 
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', '*');
-  }
-  next();
-});
+app.use(cors({
+  origin: 'https://kateaedon.movie.nomoredomains.icu',
+}));
 
 app.use(router);
 
