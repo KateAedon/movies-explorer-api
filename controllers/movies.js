@@ -4,7 +4,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id }).select('+owner')
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 };
@@ -12,33 +12,19 @@ module.exports.getMovies = (req, res, next) => {
 module.exports.addMovie = (req, res, next) => {
   const owner = req.user._id;
 
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
-
   Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    owner,
-    movieId,
+    country: req.body.country,
+    director: req.body.director,
+    duration: req.body.duration,
+    year: req.body.year,
+    description: req.body.description,
+    image: req.body.image,
+    trailer: req.body.trailer,
+    nameRU: req.body.nameRU,
+    nameEN: req.body.nameEN,
+    thumbnail: req.body.thumbnail,
+    owner: req.user._id,
+    movieId: req.body.movieId,
   })
     .then((movie) => {
       res.send(movie);
