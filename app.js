@@ -26,8 +26,10 @@ mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
 
-app.use(cors());
-// origin: 'https://kateaedon.movie.nomoredomains.icu',
+app.use(cors({
+  origin: 'https://kateaedon.movie.nomoredomains.icu',
+}));
+
 // origin: 'http://localhost:3000',
 app.use(router);
 
